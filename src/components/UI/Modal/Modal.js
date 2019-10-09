@@ -3,7 +3,7 @@ import Aux from "../../../hoc/dumb";
 import BackDrop from "../BackDrop/BackDrop";
 const modal = (props) => (
     <Aux>
-        <BackDrop show={props.show} onclickdelModal={props.cancelBackdrop} />
+        <BackDrop show={props.show} clicked={props.cancelBackdrop} />
         <div className="Modal"
             style={{
                 transform: props.show ? "translateY(0)" : "translateY(-100vh)",
