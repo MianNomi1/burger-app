@@ -5,7 +5,7 @@ import NavigationItems from "../NavigationItems/NavigationItems";
 const SideDrawer = () => {
     return (
         <div className="SideDrawer">
-            <SideDrawerLogo />
+            <SideDrawerLogo height="11%" />
             <NavigationItems />
         </div>
     );
