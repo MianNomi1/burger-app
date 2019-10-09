@@ -1,5 +1,5 @@
 .Layout-content{
-  margin-top: 16px;
+  margin-top: 72px;
 }
 
 .BreadBottom {
@@ -159,14 +159,14 @@
   align-items: center;
   box-shadow:0 2px 1px #ccc ;
   margin: auto;
-  padding: 4px 0;
+  padding: 1px 0;
   
 }
 .BuildControl {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 5px 0;
+  margin: 2px 0;
 }
 
 .BuildControl button {
@@ -227,7 +227,7 @@
   color: #966909;
   font-family: inherit;
   font-size: 1.2em;
-  padding: 10px 15px;
+  padding: 8px 10px;
   box-shadow: 2px 2px 2px #966909;
 }
 
@@ -317,4 +317,23 @@
 
 .Danger {
   color: #944317;
+}
+
+.ToolBar{
+  width: 100%;
+  height: 56px;
+  position: fixed;
+  top:0;
+  left:0;
+  background-color: #703B09;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 90px;
+}
+
+.ToolBar Nav{
+  height: 100%;
 }
