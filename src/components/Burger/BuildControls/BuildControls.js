@@ -1,0 +1,26 @@
+import React from "react";
+import BuildControl from "./BuildControl/BuildControl";
+
+const controls = [
+    { label: "Salad", type: "salad" },
+    { label: "Cheese", type: "cheese" },
+    { label: "Meat", type: "meat" },
+    { label: "Bacon", type: "bacon" },
+];
+const buildControls = (props) => (
+    <div className="Main-BuildControl">
+        <p>Current Price : <strong>{props.price.toFixed(2)}$</strong></p>
+        {controls.map(ctrl => (
+            <BuildControl
+                key={ctrl.label}
+                label={ctrl.label}
+                added={() => props.ingredientAdded(ctrl.type)}
+                deleted={() => props.ingredientdeleted(ctrl.type)}
+                disable={props.info[ctrl.type]}
+            />
+        ))}
+        <button className="OrderButton" disabled={!props.purchaseAble} onClick={props.purchase}>ORDER NOW</button>
+    </div>
+);
+
+export default buildControls;
