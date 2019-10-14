@@ -78,25 +78,26 @@ class BurgerBuilder extends Component {
         this.setState({ purchasing: false });
     }
     handlerConOrder = () => {
-        this.setState({ showSpinner: true });
-        const orders = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: "Nouman",
-                address: "test City",
-                country: "Pakistan"
-            },
-            email: "miannomanch@gmail.com",
-            deliveryMethod: "fastest"
-        }
-        axios.post("/orders.json", orders)
-            .then(response => {
-                this.setState({ showSpinner: false, purchasing: false })
-            })
-            .catch(error => {
-                this.setState({ showSpinner: false, purchasing: false });
-            })
+        // this.setState({ showSpinner: true });
+        // const orders = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: "Nouman",
+        //         address: "test City",
+        //         country: "Pakistan"
+        //     },
+        //     email: "miannomanch@gmail.com",
+        //     deliveryMethod: "fastest"
+        // }
+        // axios.post("/orders.json", orders)
+        //     .then(response => {
+        //         this.setState({ showSpinner: false, purchasing: false })
+        //     })
+        //     .catch(error => {
+        //         this.setState({ showSpinner: false, purchasing: false });
+        //     })
+        this.props.history.push("/checkout");
     }
 
     render() {
