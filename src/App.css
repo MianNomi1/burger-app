@@ -561,10 +561,6 @@
   box-sizing: border-box;
 }
 
-.Input {
-  display: block;
-}
-
 @media (min-width: 600px) {
   .ContactData {
       width: 500px;
@@ -577,4 +573,36 @@
   padding: 10px;
   margin: 10px auto;
   box-sizing: border-box;
+}
+.FormInput {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.FormLabel {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.FormInputElement {
+  outline: none;
+  border: 1px solid #ccc;
+  background-color: white;
+  font: inherit;
+  padding: 6px 10px;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.FormInputElement:focus {
+  outline: none;
+  background-color: #ccc;
+}
+
+.FormInvalid {
+  border: 1px solid red;
+  background-color: #FDA49A;
 }
