@@ -1,9 +1,36 @@
 import React, { Component } from "react";
 import Order from "../../components/Orders/Order";
+import axios from "../../axios-orders";
 class Orders extends Component {
+    state = {
+        orders: [],
+        showSpinner: true
+    }
+    componentDidMount() {
+        axios.get('/orders.json')
+            .then(res => {
+                const fetchedOrders = [];
+                console.log(res.data)
+                for (let key in res.data) {
+                    console.log(key);
+                    fetchedOrders.push({
+                        ...res.data[key],
+                        id: key
+                    });
+                }
+                this.setState({ showSpinner: false, orders: fetchedOrders })
+            })
+            .catch(err => {
+                this.setState({ showSpinner: false })
+            })
+    }
     render() {
         return (
-            <Order />
+            this.state.orders.map(order => (
+                <Order key={order.id}
+                    ingredients={order.ingredients}
+                    price={order.price} />
+            ))
         );
     }
 }
