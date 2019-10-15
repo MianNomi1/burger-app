@@ -4,20 +4,20 @@ const input = (props) => {
     let inputElement = null;
     switch (props.elementType) {
         case 'input':
-            inputElement = <input className="FormInputElement" {...props.elementConfig} value={props.value} />
+            inputElement = <input className="FormInputElement" onChange={props.change} {...props.elementConfig} value={props.value} />
             break;
         case 'textarea':
-            inputElement = <textarea className="FormInputElement" {...props.elementConfig} value={props.value} />
+            inputElement = <textarea className="FormInputElement" onChange={props.change} {...props.elementConfig} value={props.value} />
             break;
         case 'select':
-            inputElement = <select className="FormInputElement" value={props.value}>
+            inputElement = <select className="FormInputElement" onChange={props.change} value={props.value}>
                 {props.elementConfig.options.map(option => (<option key={option.value} value={option.value}>
                     {option.displayValue}
                 </option>))}
             </select>
             break;
         default:
-            inputElement = <input className="FormInputElement" {...props.elementConfig} value={props.value} />
+            inputElement = <input className="FormInputElement" onChange={props.change} {...props.elementConfig} value={props.value} />
             break;
     }
     return (
