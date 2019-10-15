@@ -12,7 +12,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Name'
                 },
-                value=''
+                value: ''
             },
             address: {
                 elementType: 'input',
@@ -20,7 +20,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Address'
                 },
-                value=''
+                value: ''
             },
             country: {
                 elementType: 'input',
@@ -28,7 +28,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Country'
                 },
-                value=''
+                value: ''
             },
             zipCode: {
                 elementType: 'input',
@@ -36,7 +36,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Zip Code'
                 },
-                value=''
+                value: ''
             },
             email: {
                 elementType: 'input',
@@ -44,7 +44,7 @@ class ContactData extends Component {
                     type: 'email',
                     placeholder: 'Your E-mail'
                 },
-                value=''
+                value: ''
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -54,7 +54,7 @@ class ContactData extends Component {
                         { value: 'cheapest', displayValue: 'Cheapest' }
                     ]
                 },
-                value=''
+                value: ''
             },
         },
         showSpinner: false
@@ -77,11 +77,19 @@ class ContactData extends Component {
 
     }
     render() {
+        const formElementArray = [];
+        for (let key in this.state.orderForm) {
+            formElementArray.push({
+                id: key,
+                config: this.state.orderForm[key]
+            })
+        }
         let form = (<form>
-            <Input elementType=" " elementConfig=" " value=" " />
-            <Input inputtype="input" type="email" name="email" placeholder="Your email" />
-            <Input inputtype="input" type="text" name="street" placeholder="Street" />
-            <Input inputtype="input" type="text" name="postal" placeholder="Postal Code" />
+            {formElementArray.map(formElement => (
+                <Input elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value} />
+            ))}
             <Button btnType="Success" clicked={this.orderHandler}> ORDER</Button>
         </form>);
         if (this.state.showSpinner) {
