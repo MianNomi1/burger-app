@@ -12,7 +12,12 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Name'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
             address: {
                 elementType: 'input',
@@ -20,7 +25,13 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Address'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+
             },
             country: {
                 elementType: 'input',
@@ -28,7 +39,12 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Country'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
             zipCode: {
                 elementType: 'input',
@@ -36,7 +52,14 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Zip Code'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5
+                },
+                valid: false,
+                touched: false
             },
             email: {
                 elementType: 'input',
@@ -44,7 +67,13 @@ class ContactData extends Component {
                     type: 'email',
                     placeholder: 'Your E-mail'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true,
+                    isEmail: true
+                },
+                valid: false,
+                touched: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -54,9 +83,12 @@ class ContactData extends Component {
                         { value: 'cheapest', displayValue: 'Cheapest' }
                     ]
                 },
-                value: ''
+                value: '',
+                validation: {},
+                valid: true
             },
         },
+        formIsValid: false,
         showSpinner: false
     }
     orderHandler = (event) => {
@@ -89,8 +121,46 @@ class ContactData extends Component {
             ...updateOrderForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        updatedFormElement.touched = true;
         updateOrderForm[inputIdentifier] = updatedFormElement;
-        this.setState({ orderForm: updateOrderForm });
+        let formIsValid = true;
+
+        for (let inputIdentifier in updateOrderForm) {
+            formIsValid = updateOrderForm[inputIdentifier].valid && formIsValid;
+        }
+        this.setState({ orderForm: updateOrderForm, formIsValid: formIsValid });
+    }
+    checkValidity(value, rules) {
+        let isValid = true;
+        if (!rules) {
+            return true;
+        }
+
+        if (rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid
+        }
+
+        if (rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid
+        }
+
+        if (rules.isEmail) {
+            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            isValid = pattern.test(value) && isValid
+        }
+
+        if (rules.isNumeric) {
+            const pattern = /^\d+$/;
+            isValid = pattern.test(value) && isValid
+        }
+
+        return isValid;
+
     }
     render() {
         const formElementArray = [];
@@ -105,9 +175,12 @@ class ContactData extends Component {
                 <Input key={formElement.id} elementType={formElement.config.elementType}
                     elementConfig={formElement.config.elementConfig}
                     value={formElement.config.value}
+                    invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    touched={formElement.config.touched}
                     change={(event) => this.inputChangeHandler(event, formElement.id)} />
             ))}
-            <Button btnType="Success" clicked={this.orderHandler}> ORDER</Button>
+            <Button btnType="Success" disabled={!this.state.formIsValid} clicked={this.orderHandler}> ORDER</Button>
         </form>);
         if (this.state.showSpinner) {
             form = <Spinner />

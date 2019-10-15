@@ -319,6 +319,9 @@
 .Danger {
   color: #944317;
 }
+.Disabled{
+  color: #ccc;
+}
 
 .ToolBar{
   width: 100%;
