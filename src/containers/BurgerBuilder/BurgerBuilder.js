@@ -12,7 +12,6 @@ import { connect } from "react-redux";
 
 class BurgerBuilder extends Component {
     state = {
-        purchaseAble: false,
         purchasing: false,
         showSpinner: false,
         error: false
@@ -31,7 +30,7 @@ class BurgerBuilder extends Component {
         }).reduce((i, j) => {
             return i + j;
         }, 0);
-        this.setState({ purchaseAble: sum > 0 });
+        return (sum > 0)
 
     }
 
@@ -120,7 +119,7 @@ class BurgerBuilder extends Component {
                     <BuildControls ingredientAdded={this.props.onIngrediantAdded}
                         ingredientdeleted={this.props.onIngrediantRemoved}
                         info={disabledInfo}
-                        purchaseAble={this.state.purchaseAble}
+                        purchaseAble={this.updatePurchaseAble(this.props.ings)}
                         price={this.props.price}
                         purchase={this.handlePurchaseAble} />
                 </Aux>
