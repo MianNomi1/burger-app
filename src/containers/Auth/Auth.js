@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Buttons/Button";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/index";
 class Auth extends Component {
     state = {
         controls: {
@@ -78,6 +80,10 @@ class Auth extends Component {
         };
         this.setState({ controls: updatedControls });
     }
+    submitHandler = (event) => {
+        event.preventDefault();
+        this.props.onAuth(this.state.controls.email, this.state.controls.password);
+    }
     render() {
         const formElementArray = [];
         for (let key in this.state.controls) {
@@ -100,12 +106,17 @@ class Auth extends Component {
         </form>);
 
         return (<div>
-            <form className="ContactData">
+            <form className="ContactData" onSubmit={this.submitHandler}>
                 {form}
                 <Button btnType="Success"> SUBMIT</Button>
             </form>
         </div>);
     }
 }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAuth: (email, password) => dispatch(actions.auth(email, password))
+    }
+}
 
-export default Auth;
+export default connect(null, mapDispatchToProps)(Auth);
