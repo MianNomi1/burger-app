@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import Order from "../../components/Orders/Order";
 import axios from "../../axios-orders";
-import {connect } from "react-redux";
+import { connect } from "react-redux";
 class Orders extends Component {
     state = {
         orders: [],
         showSpinner: true
     }
     componentDidMount() {
-        axios.get('/orders.json?auth=' + this.props.token)
+        let ttoken = this.props.token;
+        if (this.props.token === null) {
+            ttoken = localStorage.getItem('token');
+        }
+        axios.get('/orders.json?auth=' + ttoken)
             .then(res => {
                 const fetchedOrders = [];
                 console.log(res.data)
@@ -36,9 +40,9 @@ class Orders extends Component {
     }
 }
 
-const mapStateToProps = state=>{
-    return{
-        token : state.auth.token
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token
     }
 }
 export default connect(mapStateToProps)(Orders);
