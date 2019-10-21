@@ -6,6 +6,7 @@ import './App.css';
 import Checkout from "../src/containers/Checkout/Checkout";
 import Orders from "../src/containers/Orders/Orders";
 import Auth from "../src/containers/Auth/Auth";
+import Logout from "../src/containers/Auth/logout";
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
             <Route path="/orders" component={Orders} />
             <Route path="/auth" component={Auth} />
             <Route path="/" exact component={BurgerBuilder} />
+            <Route path="/logout" exact component={Logout} />
           </Switch>
         </Layout>
       </div>

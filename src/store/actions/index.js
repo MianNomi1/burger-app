@@ -1,5 +1,5 @@
 export { addIngredient, removeIngredient, initIngredients } from "./BurgerBuilderAction";
 export { } from "./OrderAction";
 export {
-    auth
+    auth, logout
 } from './authAction';

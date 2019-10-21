@@ -6,11 +6,11 @@ export const authStart = () => {
         type: actionTypes.AUTH_START
     }
 }
-export const authSuccess = (idToken , userId) => {
+export const authSuccess = (idToken, userId) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: idToken,
-        userId : userId
+        userId: userId
     }
 }
 
@@ -49,7 +49,7 @@ export const auth = (email, password, isSignup) => {
         axios.post(url, authData)
             .then(response => {
                 console.log(response);
-                dispatch(authSuccess(response.data.idToken , response.data.localId));
+                dispatch(authSuccess(response.data.idToken, response.data.localId));
                 dispatch(checkAuthtimeout(response.data.expiresIn))
             })
             .catch(error => {
