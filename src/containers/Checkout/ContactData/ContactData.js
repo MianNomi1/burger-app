@@ -84,7 +84,7 @@ class ContactData extends Component {
                         { value: 'cheapest', displayValue: 'Cheapest' }
                     ]
                 },
-                value: '',
+                value: 'fastest',
                 validation: {},
                 valid: true
             },
@@ -104,7 +104,7 @@ class ContactData extends Component {
             price: this.props.price,
             orderData: formData
         }
-        axios.post("/orders.json", orders)
+        axios.post("/orders.json?auth=" + this.props.token, orders)
             .then(response => {
                 this.setState({ showSpinner: false });
                 this.props.history.push("/");
@@ -195,8 +195,9 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice
+        ings: state.burger.ingredients,
+        price: state.burger.totalPrice,
+        token : state.auth.token
     }
 }
 export default connect(mapStateToProps)(ContactData);

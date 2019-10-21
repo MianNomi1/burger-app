@@ -90,11 +90,6 @@ class Auth extends Component {
             return { isSignup: !prevState.isSignup };
         });
     }
-    switchAuthModeHandler = () => {
-        this.setState(prevState => {
-            return { isSignup: !prevState.isSignup };
-        });
-    }
     render() {
         const formElementArray = [];
         for (let key in this.state.controls) {

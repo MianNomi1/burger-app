@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import Order from "../../components/Orders/Order";
 import axios from "../../axios-orders";
+import {connect } from "react-redux";
 class Orders extends Component {
     state = {
         orders: [],
         showSpinner: true
     }
     componentDidMount() {
-        axios.get('/orders.json')
+        axios.get('/orders.json?auth=' + this.props.token)
             .then(res => {
                 const fetchedOrders = [];
                 console.log(res.data)
@@ -35,4 +36,9 @@ class Orders extends Component {
     }
 }
 
-export default Orders;
+const mapStateToProps = state=>{
+    return{
+        token : state.auth.token
+    }
+}
+export default connect(mapStateToProps)(Orders);
