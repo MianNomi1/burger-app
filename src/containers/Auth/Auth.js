@@ -34,7 +34,8 @@ class Auth extends Component {
                 valid: false,
                 touched: false
             },
-        }
+        },
+        isSignup: true
     }
     checkValidity(value, rules) {
         let isValid = true;
@@ -82,7 +83,17 @@ class Auth extends Component {
     }
     submitHandler = (event) => {
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email, this.state.controls.password);
+        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup);
+    }
+    switchAuthModeHandler = () => {
+        this.setState(prevState => {
+            return { isSignup: !prevState.isSignup };
+        });
+    }
+    switchAuthModeHandler = () => {
+        this.setState(prevState => {
+            return { isSignup: !prevState.isSignup };
+        });
     }
     render() {
         const formElementArray = [];
@@ -93,30 +104,38 @@ class Auth extends Component {
             })
         }
 
-        let form = (<form>
-            {formElementArray.map(formElement => (
-                <Input key={formElement.id} elementType={formElement.config.elementType}
-                    elementConfig={formElement.config.elementConfig}
-                    value={formElement.config.value}
-                    invalid={!formElement.config.valid}
-                    shouldValidate={formElement.config.validation}
-                    touched={formElement.config.touched}
-                    change={(event) => this.inputChangeHandler(event, formElement.id)} />
-            ))}
-        </form>);
-
-        return (<div>
-            <form className="ContactData" onSubmit={this.submitHandler}>
+        let form = formElementArray.map(formElement => (
+            <Input key={formElement.id} elementType={formElement.config.elementType}
+                elementConfig={formElement.config.elementConfig}
+                value={formElement.config.value}
+                invalid={!formElement.config.valid}
+                shouldValidate={formElement.config.validation}
+                touched={formElement.config.touched}
+                change={(event) => this.inputChangeHandler(event, formElement.id)} />
+        ));
+        let error = null;
+        if (this.props.error) {
+            error = <p>{this.props.error.message}</p>
+        }
+        return (<div className="ContactData">
+            {error}
+            <form onSubmit={this.submitHandler}>
                 {form}
                 <Button btnType="Success"> SUBMIT</Button>
             </form>
+            <Button btnType="Danger" clicked={this.switchAuthModeHandler} >SWITCH TO {this.state.isSignup ? 'SIGNIN' : 'SIGNUP'} </Button>
         </div>);
+    }
+}
+const mapStateToProps = (state) => {
+    return {
+        error: state.auth.error
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
     }
 }
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

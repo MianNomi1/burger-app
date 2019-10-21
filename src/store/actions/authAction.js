@@ -1,6 +1,5 @@
 import * as actionTypes from "../../store/actions/actionTypes";
-import { dispatch } from "../../../../../../AppData/Local/Microsoft/TypeScript/3.1/node_modules/rxjs/internal/observable/pairs";
-
+import axios from "axios";
 export const authStart = () => {
     return {
         type: actionTypes.AUTH_START
@@ -20,8 +19,25 @@ export const authFail = (error) => {
     }
 }
 
-export const auth = (email, password) => {
+export const auth = (email, password, isSignup) => {
     return (dispatch) => {
         dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        };
+        let url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyASIwBhJtDy5xoaJXSkDWF8oyP_cq3_vzM";
+        if (!isSignup) {
+            url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyASIwBhJtDy5xoaJXSkDWF8oyP_cq3_vzM";
+        }
+        axios.post(url, authData)
+            .then(response => {
+                console.log(response);
+                dispatch(authSuccess(response.data));
+            })
+            .catch(error => {
+                dispatch(authFail(error.response.data.message));
+            });
     }
 }
